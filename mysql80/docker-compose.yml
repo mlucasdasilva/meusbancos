@@ -21,6 +21,9 @@ services:
   adminer:
     image: adminer
     restart: always
+    # para uso no mysql 8 eh necessario:
+    # ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'password';
+    # ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
     ports:
       - 8080:8080
 
