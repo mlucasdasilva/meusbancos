@@ -1,0 +1,44 @@
+version: '3.4'
+
+networks:
+  dc:
+    driver: bridge
+
+volumes:
+  master-data:
+  slave-data:
+
+services:
+  master:
+    #image: "mariadb:10.2.6"
+    image: "mariadb:10.5.3"
+    environment:
+      - "MYSQL_ROOT_PASSWORD=password"
+      - "ALLOW_EMPTY_PASSWORD=yes"
+    volumes:
+      - "./init/master:/docker-entrypoint-initdb.d"
+      - "./conf/master:/etc/mysql/conf.d"
+      #- "./data/master:/var/lib/mysql"
+      - master-data:/var/lib/mysql
+    networks:
+      - dc
+
+  slave:
+    #image: "mariadb:10.2.6"
+    image: "mariadb:10.5.3"
+    volumes:
+      - "./init/replica:/docker-entrypoint-initdb.d"
+      - "./conf/replica:/etc/mysql/conf.d"
+      #- "./data/replica:/var/lib/mysql"
+      - slave-data:/var/lib/mysql
+    environment:
+      - "MYSQL_MASTER_ROOT_PASS=password"
+      - "MYSQL_ROOT_PASSWORD=password"
+      - "ALLOW_EMPTY_PASSWORD=yes"
+    networks:
+      - dc
+    depends_on:
+      - master
+    links:
+      - master
+
