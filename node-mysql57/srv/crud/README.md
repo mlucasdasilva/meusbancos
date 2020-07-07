@@ -24,32 +24,33 @@
    INSERT INTO learnerdetails ( learner_name, learner_email, course_id ) VALUES ("mary","mary@mail.com",50);
    INSERT INTO learnerdetails ( learner_name, learner_email, course_id ) VALUES ("peter","peter@mail.com",50);
 
+   DROP PROCEDURE IF EXISTS `learnerAddOrEdit`;
    DELIMITER $$
    CREATE DEFINER=`root`@`localhost` PROCEDURE `learnerAddOrEdit`(
-      IN _learner_id INT,
-      IN _learner_name VARCHAR(255),
-      IN _learner_email VARCHAR(255),
-      IN _course_Id INT
+     IN _learner_id INT,
+     IN _learner_name VARCHAR(255),
+     IN _learner_email VARCHAR(255),
+     IN _course_id INT
    )
    BEGIN
-      IF _learner_id = 0 THEN
-      INSERT INTO learnerdetails(learner_name,learner_email,course_Id)
-      VALUES (_learner_name,_learner_email,_course_Id);
-      SET _learner_id = last_insert_id();
-      ELSE
-      UPDATE learnerdetails
-      SET
-      learner_name = _learner_name,
-      learner_email = _learner_email,
-      course_Id = _course_Id
-      WHERE learner_id = _learner_id;
-      END IF;
-      SELECT _learner_id AS 'learner_id';
+     IF _learner_id = 0 THEN
+     INSERT INTO learnerdetails(learner_name,learner_email,course_id)
+     VALUES (_learner_name,_learner_email,_course_id);
+     SET _learner_id = last_insert_id();
+     ELSE
+     UPDATE learnerdetails
+     SET
+     learner_name = _learner_name,
+     learner_email = _learner_email,
+     course_id = _course_id
+     WHERE learner_id = _learner_id;
+     END IF;
+     SELECT _learner_id AS 'learner_id';
    END $$
    DELIMITER ;
 
 
-# Tutotial comandos curl - http  GET, POST, PUT and DELETE
+# Tutorial comandos curl - http  GET, POST, PUT and DELETE
 
     curl http://172.18.34.75:4000/learners
     curl -v http://172.18.34.75:4000/learners
@@ -62,16 +63,20 @@
 
 ## POST
 
-    curl         -d '{"id":9,"name":"baeldung"}' -H 'Content-Type: application/json' http://localhost:8082/spring-rest/foos/new
-    curl -X POST -d '{"id":9,"name":"baeldung"}' -H 'Content-Type: application/json' http://localhost:8082/spring-rest/foos/new
+    curl         -d '{"learner_id":0,"learner_name":"xana","learner_email":"xana@mail.com","course_id":50}' -H 'Content-Type: application/json' http://172.18.34.75:4000/learners
+    curl -X POST -d '{"learner_id":0,"learner_name":"xana","learner_email":"xana@mail.com","course_id":50}' -H 'Content-Type: application/json' http://172.18.34.75:4000/learners
+    curl -X POST -d @request.json -H 'Content-Type: application/json' http://172.18.34.75:4000/learners
 
 ## PUT
 
-    curl -X PUT  -d @request.json -H 'Content-Type: application/json' http://localhost:8082/spring-rest/foos/9
+    curl -X PUT  -d '{"learner_id":1,"learner_name":"john","learner_email":"john.2000@mail.com","course_id":51}' -H 'Content-Type: application/json' http://172.18.34.75:4000/learners
+    curl -X PUT  -d '{"learner_id":4,"learner_name":"xana","learner_email":"xana@mail.com","course_id":51}' -H 'Content-Type: application/json' http://172.18.34.75:4000/learners
+    curl -X PUT  -d '{"learner_id":4,"learner_name":"xana","learner_email":"xana@mail.com","course_id":52}' -H 'Content-Type: application/json' http://172.18.34.75:4000/learners
+    curl -X PUT  -d @request.json -H 'Content-Type: application/json' http://172.18.34.75:4000/learners
 
 ## DELETE
 
-    curl -X DELETE http://localhost:8082/spring-rest/foos/9
+    curl -X DELETE http://172.18.34.75:4000/learners/1
 
 
 # refs.:
