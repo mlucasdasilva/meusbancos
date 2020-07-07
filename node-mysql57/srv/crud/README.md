@@ -24,6 +24,31 @@
    INSERT INTO learnerdetails ( learner_name, learner_email, course_id ) VALUES ("mary","mary@mail.com",50);
    INSERT INTO learnerdetails ( learner_name, learner_email, course_id ) VALUES ("peter","peter@mail.com",50);
 
+   DELIMITER $$
+   CREATE DEFINER=`root`@`localhost` PROCEDURE `learnerAddOrEdit`(
+      IN _learner_id INT,
+      IN _learner_name VARCHAR(255),
+      IN _learner_email VARCHAR(255),
+      IN _course_Id INT
+   )
+   BEGIN
+      IF _learner_id = 0 THEN
+      INSERT INTO learnerdetails(learner_name,learner_email,course_Id)
+      VALUES (_learner_name,_learner_email,_course_Id);
+      SET _learner_id = last_insert_id();
+      ELSE
+      UPDATE learnerdetails
+      SET
+      learner_name = _learner_name,
+      learner_email = _learner_email,
+      course_Id = _course_Id
+      WHERE learner_id = _learner_id;
+      END IF;
+      SELECT _learner_id AS 'learner_id';
+   END $$
+   DELIMITER ;
+
+
 # Tutotial comandos curl - http  GET, POST, PUT and DELETE
 
     curl http://172.18.34.75:4000/learners
@@ -51,4 +76,6 @@
 
 # refs.:
 https://www.edureka.co/blog/node-js-mysql-tutorial/
+https://www.baeldung.com/curl-rest
+
 
