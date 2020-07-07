@@ -1,4 +1,12 @@
 
+# Quick Start
+
+## Criar banco
+   node dbcreate.js
+
+## Executar aplicacao:
+   nodemon script.js
+
 
 # Tutorial sobre como foi criada esta app crud
 
@@ -14,11 +22,11 @@
    CREATE DATABASE IF NOT EXISTS learners;
    USE learners;
    CREATE TABLE IF NOT EXISTS learnerdetails (
-   learner_id INT NOT NULL AUTO_INCREMENT,
-   learner_name VARCHAR(255),
-   learner_email VARCHAR(255),
-   course_id INT,
-   PRIMARY KEY(learner_id)
+     learner_id INT NOT NULL AUTO_INCREMENT,
+     learner_name VARCHAR(255),
+     learner_email VARCHAR(255),
+     course_id INT,
+     PRIMARY KEY(learner_id)
    );
    INSERT INTO learnerdetails ( learner_name, learner_email, course_id ) VALUES ("john","john@mail.com",50);
    INSERT INTO learnerdetails ( learner_name, learner_email, course_id ) VALUES ("mary","mary@mail.com",50);
@@ -63,8 +71,9 @@
 
 ## POST
 
-    curl         -d '{"learner_id":0,"learner_name":"xana","learner_email":"xana@mail.com","course_id":50}' -H 'Content-Type: application/json' http://172.18.34.75:4000/learners
-    curl -X POST -d '{"learner_id":0,"learner_name":"xana","learner_email":"xana@mail.com","course_id":50}' -H 'Content-Type: application/json' http://172.18.34.75:4000/learners
+    curl         -d '{"learner_name":"xana","learner_email":"xana@mail.com","course_id":50}' -H 'Content-Type: application/json' http://172.18.34.75:4000/learners
+    curl -X POST -d '{"learner_name":"xana","learner_email":"xana@mail.com","course_id":50}' -H 'Content-Type: application/json' http://172.18.34.75:4000/learners
+    curl -X POST -d '{"learner_name":"paul","learner_email":"paul@mail.com","course_id":50}' -H 'Content-Type: application/json' http://172.18.34.75:4000/learners
     curl -X POST -d @request.json -H 'Content-Type: application/json' http://172.18.34.75:4000/learners
 
 ## PUT
@@ -82,5 +91,4 @@
 # refs.:
 https://www.edureka.co/blog/node-js-mysql-tutorial/
 https://www.baeldung.com/curl-rest
-
 
