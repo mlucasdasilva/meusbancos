@@ -1,5 +1,13 @@
 version: "3.5"
-# ref.: https://dynobase.dev/run-dynamodb-locally/#docker-compose
+#
+# ref.: 
+# https://dynobase.dev/run-dynamodb-locally/#docker-compose
+# https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.UsageNotes.html
+#
+# Um possivel acesso, use o aws cli (em docker):
+# docker run --rm -it -v ${PWD}/aws:/root/.aws --net=host amazon/aws-cli dynamodb list-tables --endpoint-url http://localhost:8000
+# docker run --rm -it --net=host -e AWS_ACCESS_KEY_ID=X -e AWS_SECRET_ACCESS_KEY=X amazon/aws-cli dynamodb list-tables --endpoint-url http://localhost:8000 --region x 
+#
 services:
   dynamo:
     container_name: local-dynamodb
