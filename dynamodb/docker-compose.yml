@@ -9,8 +9,9 @@ version: "3.5"
 # docker run --rm -it --net=host -e AWS_ACCESS_KEY_ID=X -e AWS_SECRET_ACCESS_KEY=X amazon/aws-cli dynamodb list-tables --endpoint-url http://localhost:8000 --region x 
 #
 services:
+
   dynamo:
-    container_name: local-dynamodb
+    #container_name: local-dynamodb
     image: amazon/dynamodb-local
     networks:
       - local-dynamodb
@@ -20,8 +21,21 @@ services:
       - dynamodata:/home/dynamodblocal
     working_dir: /home/dynamodblocal
     command: "-jar DynamoDBLocal.jar -sharedDb -dbPath ."
+
+  admin:
+    image: dynamodb-admin
+    build:
+      context: ./dynamodb-admin
+    environment:
+      - DYNAMO_ENDPOINT=http://dynamo:8000
+    ports:
+      - "8001:8001"
+    networks:
+      - local-dynamodb
+
 networks:
   local-dynamodb:
     name: local-dynamodb
+
 volumes:
   dynamodata:
