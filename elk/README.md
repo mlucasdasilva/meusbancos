@@ -8,20 +8,20 @@ Para uso do elasticsearch a configuração de vm.max_map_count precisa ser aumen
 
 Alteração dinâmica:
 
-sysctl -w vm.max_map_count=262144
+    sysctl -w vm.max_map_count=262144
 
 
 Alteraçao definitiva:
 
-vi /etc/sysctl.conf
+    vi /etc/sysctl.conf
 
-\# Requisito elasticsearch: vm.max_map_count=262144
-vm.max_map_count=262144
+    # Requisito elasticsearch: vm.max_map_count=262144
+    vm.max_map_count=262144
 
 
 Para consultar valor atual em uso:
 
-sysctl vm.max_map_count
+    sysctl vm.max_map_count
 
 
 
