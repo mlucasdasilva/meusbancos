@@ -73,11 +73,13 @@ Editar serviço docker:
  
 Incluir:
  
+    [Service]
     ExecStart=
     ExecStart=/usr/bin/dockerd --containerd=/run/containerd/containerd.sock
   
 Ou, dependendo da versão docker, ou de outras configurações, pode simplificar para:
  
+    [Service]
     ExecStart=
     ExecStart=/usr/bin/dockerd
 
