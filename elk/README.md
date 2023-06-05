@@ -49,14 +49,20 @@ No docker swarm as configurações de ulimits do arquivo docker-compose.yml são
     vi /etc/docker/daemon.json
 
 Texto para editar/incluir:
-
+ 
     "default-ulimits": {
         "memlock": {
             "Name": "memlock",
             "Hard": -1,
             "Soft": -1
+        },
+        "nofile": {
+            "Name": "nofile",
+            "Hard": 65536,
+            "Soft": 65536
         }
-    },
+    } ,
+
  
 
 Obs.: Atenção para as virgulas de separação, pois se for incluído com ultimo elemento do arquivo não deve conter virgula ao final.
