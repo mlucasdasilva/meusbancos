@@ -64,5 +64,30 @@ Texto para editar/incluir:
     } ,
 
  
+ 
+## Pode ser necessário configurar o docker no systemd para funcionar a alteracao no /etc/docker/daemon.json
+ 
+Editar serviço docker:
+ 
+     systemctl edit docker.service
+ 
+Incluir:
+ 
+    ExecStart=
+    ExecStart=/usr/bin/dockerd --containerd=/run/containerd/containerd.sock
+  
+O resultado deve ser similar ao descrito abaixo.
+ 
+Digite:
+ 
+    cat /etc/systemd/system/docker.service.d/override.conf
+
+Saída/resultado:
+
+    [Service]
+    ExecStart=
+    ExecStart=/usr/bin/dockerd --containerd=/run/containerd/containerd.sock
+
+
 
 Obs.: Atenção para as virgulas de separação, pois se for incluído com ultimo elemento do arquivo não deve conter virgula ao final.
